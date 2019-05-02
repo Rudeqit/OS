@@ -4,6 +4,6 @@
 #include "user.h"
 #include <stdio.h>
 
-void printAll(user* phonebook);
+void printAll(phonebook *phonebook);
 
 #endif

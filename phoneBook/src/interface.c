@@ -1,11 +1,10 @@
 #include "interface.h"
 #include "phonebook.h"
 
-void printAll(user* phonebook) {
-    user* i_user;
+void printAll(phonebook *phonebook) {
+    user **iUser = phonebook->users;
 
     printf("#id\tName\tPhone\n\n");
-    
-    for (i_user = phonebook; NULL != i_user; i_user = i_user -> next)
-        printf("#%d\t%s\t%s\n", i_user->id, i_user->name, i_user->phone);
+    for (size_t i = 0; i != phonebook->numbUsers; i++)
+        printf("#%d\t%s\t%s\n", iUser[i]->id, iUser[i]->name, iUser[i]->phone);
 }

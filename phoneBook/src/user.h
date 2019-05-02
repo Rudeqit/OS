@@ -1,12 +1,19 @@
 #ifndef USER_H
 #define USER_H
 
-typedef struct s_user
-{
+#include <string.h>
+
+typedef struct {
     unsigned int id;
     char* name;
-    char* phone;
-    struct s_user* next;
+    char* phone;  
 } user;
+
+typedef struct {
+    size_t numbUsers;
+    size_t size;
+    size_t block_size;
+    user** users;
+} phonebook;
 
 #endif

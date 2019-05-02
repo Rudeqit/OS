@@ -4,7 +4,8 @@
 #include "user.h"
 #include <stdlib.h>
 
-user* create_phonebook(unsigned int id, char* name, char* phone);
-user* add_user(user* phonebook, unsigned int id, char* name, char* phone);
+phonebook *create_phonebook();
+int add_user(phonebook *phonebook, size_t id, char* name, char* phone);
+void delete_phonebook(phonebook* phonebook);
 
 #endif

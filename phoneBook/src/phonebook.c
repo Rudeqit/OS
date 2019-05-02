@@ -1,36 +1,67 @@
 #include "phonebook.h"
 
-user* create_phonebook(unsigned int id, char* name, char* phone) {
-    user* phonebook = malloc(sizeof(user));
-    
+phonebook* create_phonebook() {
+    phonebook* phonebook = malloc(sizeof(*phonebook));
+
     if (NULL != phonebook) {
-        phonebook->id = id;
-        phonebook->name = name;
-        phonebook->phone = phone;
-        phonebook->next = NULL;
+        phonebook->numbUsers = 0;
+        phonebook->size = 1;
+        phonebook->block_size = 1;
+        phonebook->users = malloc(sizeof(user*));
+        *phonebook->users = malloc(sizeof(user) * phonebook->block_size);
+        if (NULL == phonebook->users) {
+            free(phonebook);
+            return NULL;
+        }
+        if(NULL == *phonebook->users) {
+            free(phonebook->users);
+            free(phonebook);
+            return NULL;
+        }
     }
 
     return phonebook;
 }
 
-user* add_user(user* phonebook, unsigned int id, char* name, char* phone) {
-    user* newPhonebook = create_phonebook(id, name, phone);
-    
-    if (NULL != newPhonebook) {
-        newPhonebook->next = phonebook;
+int add_user(phonebook *phonebook, size_t id, char* name, char* phone) {
+    size_t numbUsers = phonebook->numbUsers;
+
+    if (numbUsers >= phonebook->size) {
+        size_t newSize = phonebook->size + phonebook->block_size;
+        void **newUsers = realloc(phonebook->users, sizeof(user*) * newSize);
+        if (NULL == newUsers) {
+            return 0;
+        } else {
+            phonebook->size = newSize;
+            phonebook->users = (user**)newUsers;
+            phonebook->users[numbUsers] = malloc(sizeof(user));
+        }
     }
-    
-    return newPhonebook;
+
+    if (NULL == phonebook->users[numbUsers]) {
+        return 0;
+    } else {
+        phonebook->users[numbUsers]->id = id;
+        phonebook->users[numbUsers]->name = name;
+        phonebook->users[numbUsers]->phone = phone;
+        ++phonebook->numbUsers;
+    }
+
+    return 1; 
+}
+
+void delete_phonebook(phonebook* phonebook) {
+    user **iUser = phonebook->users;
+
+    for (size_t i = 0; i != phonebook->numbUsers;  i++)
+        free(iUser[i]);
+
+    free(phonebook->users);
+    free(phonebook);
 }
 
 /*
 struct remove_user() {
-
-}
-*/
-
-/*
-void delete_phonebook() {
 
 }
 */
