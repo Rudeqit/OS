@@ -5,5 +5,6 @@
 #include <stdio.h>
 
 void printAll(phonebook *phonebook);
+void printRemoveError();
 
 #endif

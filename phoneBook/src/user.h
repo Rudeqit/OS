@@ -4,9 +4,9 @@
 #include <string.h>
 
 typedef struct {
-    unsigned int id;
+    size_t id;
     char* name;
-    char* phone;  
+    char* phone;
 } user;
 
 typedef struct {

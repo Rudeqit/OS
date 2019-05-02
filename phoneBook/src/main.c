@@ -7,6 +7,12 @@ int main(int argc, char** argv) {
     add_user(phonebook, 1, "Pupa", "+ 7 913");
     add_user(phonebook, 2, "Lupa", "8 913");
     add_user(phonebook, 3, "Sanya", "666");
+    add_user(phonebook, 4, "Zjmih", "777");
+
+    printAll(phonebook);
+
+    if (!(remove_user_by_id(phonebook, 1)))
+        printRemoveError();
 
     printAll(phonebook);
 
