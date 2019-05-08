@@ -233,17 +233,19 @@ char* get_str() {
     return linep;
 }
 
+#if 0
 char* get_str_() {
     char *line = malloc(100);
 
     if (line == NULL)
         return NULL;
 
-    scanf("%100s", line);
-    // fgets(line, 100, stdin);
+    // scanf("%100s", line);
+    fgets(line, 100, stdin);
 
     return line;
 }
+#endif
 
 char* to_dynamic_str(char* str) {
     size_t len = (size_t)strlen(str);

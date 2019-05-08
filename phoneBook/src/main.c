@@ -4,7 +4,7 @@
 int main(int argc, char** argv) {
     #if 1
     phonebook *phonebook = create_phonebook();
-    int input;
+    char input[3];
 
     #if 1
     add_user(phonebook, 1, to_dynamic_str("Pupa"), to_dynamic_str("+ 7 913"));
@@ -14,30 +14,30 @@ int main(int argc, char** argv) {
 
     while (1) {
         printMenu();
-        // fgetc(stdin);
-        scanf("%d", &input);
+    
+        fgets(input, 3, stdin);
 
-        switch (input) {
-            case 1: // Add
-                if (AddMenu_(phonebook))
+        switch (*input) {
+            case '1': // Add
+                if (AddMenu(phonebook))
                     printAddError();
                 break;
-            case 2: // Remove
+            case '2': // Remove
                 if (remove_user_by_id_menu(phonebook))
                     printRemoveError();
                 break;
-            case 3: // Update
+            case '3': // Update
                 if (updateMenu(phonebook))
                     printUpdateError();
                 break;
-            case 4: // Search
+            case '4': // Search
                 if (searchMenu(phonebook))
                     printSearchError();
                 break;
-            case 5: // Print
+            case '5': // Print
                 printAll(phonebook);
                 break;                
-            case 0:
+            case '0':
                 delete_phonebook(phonebook);
                 return 0;
             default:

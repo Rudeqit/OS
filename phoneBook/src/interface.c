@@ -55,7 +55,7 @@ void printMenu() {
         "Your choice?: ");
 }
 
-int AddMenu (phonebook* phonebook) {
+int AddMenu(phonebook* phonebook) {
     size_t id;
     char* name;
     char* phone;
@@ -83,36 +83,19 @@ int AddMenu (phonebook* phonebook) {
     return 0;
 }
 
-int AddMenu_(phonebook* phonebook) {
-    size_t id;
-    char* name;
-    char* phone;
-
-    printf("\nType user id: ");
-    scanf("%zd", &id);        
-
-    printf("Type user name: ");
-    if (NULL == (name = get_str_()))
-        return 1;
-
-    printf("Type user phone: ");
-    if (NULL == (phone = get_str_()))
-        return 1;
-
-    if (add_user(phonebook, id, name, phone))
-        return 1;
-
-    return 0;
-}
-
 int remove_user_by_id_menu(phonebook* phonebok) {
     size_t id;
+    char* temp;
 
     printf("Type id user (type 0 for return): ");
-    scanf("%zd", &id);
+    if (NULL == (temp = get_str()))
+        return 1;
 
-    if (id == 0)
-        return 0;
+    id = atoi(temp);
+    free(temp);
+
+    if (0 == id)
+        return -1;
 
     if (remove_user_by_id(phonebok, id))
         return 1;
@@ -124,19 +107,24 @@ int updateMenu(phonebook* phonebook) {
     size_t id;
     char* name;
     char* phone;
+    char* temp;
 
     printf("Type id user (type 0 for return): ");
-    scanf("%zd", &id);
+    if (NULL == (temp = get_str()))
+        return 1;
 
-    if (id == 0)
-        return 0;
+    id = atoi(temp);
+    free(temp);
+
+    if (0 == id)
+        return -1;
 
     printf("Type new user name: ");
-    if (NULL == (name = get_str_()))
+    if (NULL == (name = get_str()))
         return 1;
 
     printf("Type new user phone: ");
-    if (NULL == (phone = get_str_()))
+    if (NULL == (phone = get_str()))
         return 1;    
 
     if (update_user_by_id(phonebook, id, name, phone))
@@ -149,8 +137,9 @@ int searchMenu(phonebook* phonebook) {
     size_t id;
     char* name;
     char* phone;
+    char* temp;
     user* user;
-    int input;
+    char input[3];
 
     printf("\n\t1. Search by id\n"
            "\t2. Search by name\n"
@@ -158,12 +147,19 @@ int searchMenu(phonebook* phonebook) {
            "\t0. Return\n"
            "\nYour choise: ");
 
-    scanf("%d", &input);
+    fgets(input, 3, stdin);
 
-    switch (input) {
-        case 1:
+    switch (*input) {
+        case '1':
             printf("Type id user: ");
-            scanf("%zd", &id);
+            if (NULL == (temp = get_str()))
+            return 1;
+
+            id = atoi(temp);
+            free(temp);
+
+            if (0 == id)
+                return -1;
 
             user = search_by_id(phonebook, id);
             if (NULL == user)
@@ -171,23 +167,26 @@ int searchMenu(phonebook* phonebook) {
 
             printUser(user);
             break;
-        case 2:
+        case '2':
             printf("Type user name: ");
-            if (NULL == (name = get_str_()))
+            if (NULL == (name = get_str()))
                 return 1;
 
             user = search_by_name(phonebook, name);
+            free(name);
             if (NULL == user)
                 return 1;
 
             printUser(user);
+            
             break;
-        case 3:
+        case '3':
             printf("Type user phone: ");
-            if (NULL == (phone = get_str_()))
+            if (NULL == (phone = get_str()))
                 return 1;
 
             user = search_by_phone(phonebook, phone);
+            free(phone);
             if (NULL == user)
                 return 1;
 

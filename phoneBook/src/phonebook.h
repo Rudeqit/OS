@@ -16,7 +16,6 @@ int update_user_by_id(phonebook* phonebook, size_t id, char* NewName, char* NewP
 int update_name_user_by_id(phonebook* phonebook, size_t id, char* NewName);
 int update_phone_user_by_id(phonebook* phonebook, size_t id, char* NewPhone);
 char* get_str();
-char* get_str_();
 char* to_dynamic_str(char* str);
 
 #endif
